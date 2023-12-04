@@ -11,7 +11,7 @@ import pc.gear.util.Constants;
 @AllArgsConstructor
 @Builder
 public class ApiResponse<T> {
-    private Integer code;
+    private String code;
     private T data;
 
     public ApiResponse(T data) {
