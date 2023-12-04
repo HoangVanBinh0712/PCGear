@@ -1,4 +1,5 @@
 # PCGear
-The E-Commerce API
+The E-commerce website selling computers
 </br>
-Frame work: Spring boot 3, Mysql
+# Frame work
+Using Spring boot 3, Mysql
