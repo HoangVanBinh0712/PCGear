@@ -1,5 +1,6 @@
 package pc.gear.entity;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,37 +14,39 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "customer")
-public class Customer extends BaseEntity {
+@Table(name = "permission_assign")
+public class PermissionAssign extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
-    private Long customerId;
+    @Column(name = "id")
+    private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "department_id")
+    private Long departmentId;
 
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "permission_id")
+    private Long permissionId;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "startDate", nullable = false)
+    private LocalDate startDate;
 
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @Column(name = "endDate", nullable = false)
+    private LocalDate endDate;
 
     @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "department_id", insertable = false, updatable = false)
     private Department department;
+
+    @ManyToOne
+    @JoinColumn(name = "permission_id", referencedColumnName = "permission_id", insertable = false, updatable = false)
+    private Permission permission;
+
 }

@@ -18,12 +18,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "customer")
-public class Customer extends BaseEntity {
+@Table(name = "admin")
+public class Admin extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id")
-    private Long customerId;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -36,9 +36,6 @@ public class Customer extends BaseEntity {
 
     @Column(name = "password")
     private String password;
-
-    @Column(name = "address")
-    private String address;
 
     @Column(name = "phone_number")
     private String phoneNumber;
