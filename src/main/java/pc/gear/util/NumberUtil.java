@@ -13,6 +13,7 @@ public class NumberUtil {
         return defaultValue;
     }
 
+
     public static Double divideDoubleLong(Double d, Long i, Double defaultValue) {
 
         if (d != null && i != null && i != 0) {
@@ -59,6 +60,16 @@ public class NumberUtil {
         return bigDecimal.setScale(fraction, roundingMode).doubleValue();
     }
 
+
+    public static String getNumberFormat(int i, int f) {
+        StringBuilder patternBuilder = new StringBuilder();
+        patternBuilder.append(Constants.HASH.repeat(Math.max(0, i)));
+        if (f > 0) {
+            patternBuilder.append(Constants.DOT);
+            patternBuilder.append(Constants.HASH.repeat(f));
+        }
+        return patternBuilder.toString();
+    }
 
     public static void main(String[] args) {
 

@@ -4,18 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pc.gear.util.Constants;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ApiResponse<T> {
-    private String code;
+    private List<ApiError> errors;
+
     private T data;
 
     public ApiResponse(T data) {
         this.data = data;
-        this.code = Constants.SUCCESS_CODE;
+    }
+
+    public ApiResponse(List<ApiError> errors) {
+        this.errors = errors;
     }
 }
