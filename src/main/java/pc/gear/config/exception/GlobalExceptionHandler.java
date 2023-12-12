@@ -23,6 +23,7 @@ import pc.gear.util.response.ApiResponse;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @ControllerAdvice
@@ -31,6 +32,21 @@ public class GlobalExceptionHandler {
 
     @Autowired
     private MessageSource messageSource;
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse<?>> handleException(Exception exception) {
+        return new ResponseEntity<>(new ApiResponse<>(Collections.singletonList(
+                new ApiError(exception.getMessage(), Constants.INTERNAL_SERVER_ERROR_CODE)
+        )), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(PcGearException.class)
+    public ResponseEntity<ApiResponse<?>> handlePcGearException(PcGearException exception) {
+        return new ResponseEntity<>(new ApiResponse<>(Collections.singletonList(
+                new ApiError(exception.getMessage(), Constants.BAD_REQEST_CODE)
+        )), HttpStatus.BAD_REQUEST);
+    }
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)

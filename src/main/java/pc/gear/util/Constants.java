@@ -10,6 +10,7 @@ public class Constants {
     public static final Integer NUMBER_ZERO = 0;
     public static final String SUCCESS_CODE = "200";
     public static final String BAD_REQEST_CODE = "400";
+    public static final String INTERNAL_SERVER_ERROR_CODE = "500";
     public static final String HASH = "#";
 
     public static final String LANGUAGE_PARAMETER = "lang";

@@ -3,39 +3,35 @@ package pc.gear.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import pc.gear.config.audit.AuditingEntityListener;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 
     @CreatedDate
-    @Column(name = "creataedDateTime")
-    private LocalDateTime createdDateTime;
+    @Column(name = "created_datetime")
+    protected LocalDateTime createdDateTime;
 
+    @Column(name = "created_by")
     @CreatedBy
-    @Column(name = "createdBy")
-    private String createdBy;
+    protected String createdBy;
 
     @LastModifiedDate
-    @Column(name = "updatedDateTime")
-    private LocalDateTime updatedDateTime;
+    @Column(name = "updated_datetime")
+    protected LocalDateTime updatedDateTime;
 
+    @Column(name = "updated_by")
     @LastModifiedBy
-    @Column(name = "updatedBy")
-    private String updatedBy;
+    protected String updatedBy;
 }

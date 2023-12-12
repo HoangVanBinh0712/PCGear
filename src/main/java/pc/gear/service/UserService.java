@@ -1,7 +1,11 @@
 package pc.gear.service;
 
-import pc.gear.response.GetAllUserResponse;
+import pc.gear.request.auth.LoginRequest;
+import pc.gear.request.auth.RegisterRequest;
+import pc.gear.response.auth.LoginResponse;
 
 public interface UserService {
-    GetAllUserResponse getAllUser();
+    LoginResponse customerLogin(LoginRequest request);
+
+    void customerRegister(RegisterRequest request);
 }

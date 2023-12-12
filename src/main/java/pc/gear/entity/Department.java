@@ -24,6 +24,9 @@ public class Department extends BaseEntity {
     @Column(name = "department_id")
     private Long departmentId;
 
+    @Column(name = "department_cd", columnDefinition = "varchar(16) CHARACTER SET utf8mb4")
+    private String departmentCd;
+
     @Column(name = "department_name", columnDefinition = "varchar(255) CHARACTER SET utf8mb4")
     private String departmentName;
 

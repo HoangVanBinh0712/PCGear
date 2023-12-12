@@ -9,12 +9,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -44,6 +44,6 @@ public class Customer extends BaseEntity {
     private String phoneNumber;
 
     @ManyToOne
-    @JoinColumn(name = "department_id", referencedColumnName = "department_id", insertable = false, updatable = false)
+    @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     private Department department;
 }

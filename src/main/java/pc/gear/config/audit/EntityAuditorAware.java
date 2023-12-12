@@ -4,10 +4,10 @@ import org.springframework.data.domain.AuditorAware;
 
 import java.util.Optional;
 
-public class AuditorAwareImpl implements AuditorAware<String> {
+public class EntityAuditorAware implements AuditorAware<String> {
+
     @Override
     public Optional<String> getCurrentAuditor() {
-
-        return "Naresh".describeConstable();
+        return Optional.of("Atta");
     }
 }
