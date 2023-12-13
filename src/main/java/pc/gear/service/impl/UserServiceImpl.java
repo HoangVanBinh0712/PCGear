@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pc.gear.dto.User;
 import pc.gear.entity.Customer;
 import pc.gear.entity.Department;
 import pc.gear.repository.AdminRepository;
@@ -52,8 +53,9 @@ public class UserServiceImpl extends BaseService implements UserService {
         Customer customer = customerRepository.findTop1ByUserName(request.getUsername());
         if (customer != null) {
             if (passwordEncoder.matches(request.getPassword(), customer.getPassword())) {
-                String accessToken = jwtService.generateCustomerAccessToken(customer);
-                String refreshToken = jwtService.generateCustomerAccessToken(customer);
+                User user = new User(customer);
+                String accessToken = jwtService.generateCustomerAccessToken(user);
+                String refreshToken = jwtService.generateCustomerRefreshToken(user);
                 return LoginResponse.builder()
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)

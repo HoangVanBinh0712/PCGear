@@ -15,6 +15,13 @@ public class Constants {
 
     public static final String LANGUAGE_PARAMETER = "lang";
     public static final String LOCALE_EN = "en";
+    public static final String AUTHENTICATION = "Authorization";
+    public static final String BEARER = "Bearer ";
 
+    public static final String CLAIMS_USER_ID = "userId";
+    public static final String CLAIMS_USER_NAME = "userName";
+    public static final String CLAIMS_NAME = "name";
+    public static final String CLAIMS_DEPARTMENT = "department";
+    public static final String CLAIMS_EMAIL = "email";
 
 }
