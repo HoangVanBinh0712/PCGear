@@ -15,6 +15,6 @@ public class Constants {
 
     public static final String LANGUAGE_PARAMETER = "lang";
     public static final String LOCALE_EN = "en";
-
-
+    public static final String AUTHENTICATION = "Authorization";
+    public static final String BEARER = "Bearer ";
 }
