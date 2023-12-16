@@ -16,7 +16,14 @@ public class DateUtil {
 
     public static final String YYYY_MM_DD_HH_MM_SS_ZZZ = "yyyy-MM-dd HH:mm:ss.zzz";
 
-    public String localDatetimeToPattern(LocalDateTime dateTime, String pattern) {
+    public static LocalDateTime defaultLocalDatetime(LocalDateTime dateTime) {
+        if (dateTime == null) {
+            return LocalDateTime.MIN;
+        }
+        return dateTime;
+    }
+
+    public static String localDatetimeToPattern(LocalDateTime dateTime, String pattern) {
 
         if (dateTime == null) {
             return Constants.EMPTY;
@@ -24,7 +31,7 @@ public class DateUtil {
         return dateTime.format(DateTimeFormatter.ofPattern(pattern));
     }
 
-    public String localDateToPattern(LocalDate date, String pattern) {
+    public static String localDateToPattern(LocalDate date, String pattern) {
 
         if (date == null) {
             return Constants.EMPTY;
@@ -32,12 +39,12 @@ public class DateUtil {
         return date.format(DateTimeFormatter.ofPattern(pattern));
     }
 
-    public String getBasicIsoDate() {
+    public static String getBasicIsoDate() {
 
         return LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE);
     }
 
-    public LocalDateTime toLocalDatetime(String dateTimeStr, String pattern) {
+    public static LocalDateTime toLocalDatetime(String dateTimeStr, String pattern) {
 
         if (StringUtils.isNotBlank(dateTimeStr) && StringUtils.isNotBlank(pattern)) {
             return LocalDateTime.parse(dateTimeStr, DateTimeFormatter.ofPattern(pattern));
@@ -45,7 +52,7 @@ public class DateUtil {
         return null;
     }
 
-    public LocalDate toLocalDate(String dateStr, String pattern) {
+    public static LocalDate toLocalDate(String dateStr, String pattern) {
 
         if (StringUtils.isNotBlank(dateStr) && StringUtils.isNotBlank(pattern)) {
             return LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(pattern));

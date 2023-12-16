@@ -32,6 +32,7 @@ public class AdminDetailsServiceImpl implements UserDetailsService {
             userDetail.setUsername(username);
             userDetail.setUserId(admin.getId());
             userDetail.setRole(Role.ADMIN);
+            return userDetail;
         }
         throw new UsernameNotFoundException(messageSource.getMessage(MessageConstants.USER_NOT_FOUND_MESSAGE, new String[] { username }, LocaleContextHolder.getLocale()));
     }

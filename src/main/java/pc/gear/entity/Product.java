@@ -8,14 +8,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import pc.gear.util.Constants;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -33,6 +36,9 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "description")
     private String description;
 
@@ -45,7 +51,7 @@ public class Product extends BaseEntity {
     @Column(name = "discount")
     private BigDecimal discount;
 
-    @Column(name = "discountFrom")
+    @Column(name = "discount_from")
     private LocalDateTime discountFrom;
 
     @Column(name = "discount_to")
@@ -54,7 +60,17 @@ public class Product extends BaseEntity {
     @Column(name = "image")
     private String image;
 
-    @Column(name = "deleteFg", columnDefinition = "bit default b'0'")
+    @Column(name = "delete_Fg")
     private Boolean deleteFlag;
 
+    @Column(name = "product_code")
+    private String productCode;
+
+    @PrePersist
+    public void prePersist() {
+        // Replace spaces with hyphens
+        this.productCode = this.title.replaceAll(Constants.BLANK, Constants.HYPHEN)
+                + Constants.HYPHEN + UUID.randomUUID();
+        this.deleteFlag = this.deleteFlag != null ? this.deleteFlag : Boolean.FALSE;
+    }
 }

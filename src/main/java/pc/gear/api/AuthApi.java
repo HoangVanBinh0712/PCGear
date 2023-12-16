@@ -21,6 +21,10 @@ public class AuthApi {
     public ApiResponse<?> login(@RequestBody @Valid LoginRequest request) {
         return new ApiResponse<>(userService.customerLogin(request));
     }
+    @PostMapping(value = UriConstants.ADMIN + UriConstants.LOGIN)
+    public ApiResponse<?> adminLogin(@RequestBody @Valid LoginRequest request) {
+        return new ApiResponse<>(userService.adminLoginLogin(request));
+    }
 
     @PostMapping(value = UriConstants.REGISTER)
     public ApiResponse<?> register(@RequestBody @Valid RegisterRequest request) {

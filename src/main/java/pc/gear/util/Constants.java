@@ -9,7 +9,7 @@ public class Constants {
     public static final String STRING_ZERO = "0";
     public static final Integer NUMBER_ZERO = 0;
     public static final String SUCCESS_CODE = "200";
-    public static final String BAD_REQEST_CODE = "400";
+    public static final String BAD_REQUEST_CODE = "400";
     public static final String INTERNAL_SERVER_ERROR_CODE = "500";
     public static final String HASH = "#";
 
@@ -23,5 +23,7 @@ public class Constants {
     public static final String CLAIMS_NAME = "name";
     public static final String CLAIMS_DEPARTMENT = "department";
     public static final String CLAIMS_EMAIL = "email";
+
+    public static final String PROJECT_CODE = "projectCode";
 
 }
