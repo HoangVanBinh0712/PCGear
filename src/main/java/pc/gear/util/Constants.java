@@ -1,8 +1,11 @@
 package pc.gear.util;
 
+import java.util.List;
+
 public class Constants {
     public static final String EMPTY = "";
     public static final String BLANK = " ";
+    public static final String PERCENT = "%";
     public static final String DOT = ".";
     public static final String HYPHEN = "-";
     public static final String COMMA = ",";
@@ -23,7 +26,9 @@ public class Constants {
     public static final String CLAIMS_NAME = "name";
     public static final String CLAIMS_DEPARTMENT = "department";
     public static final String CLAIMS_EMAIL = "email";
+    public static final String PRODUCT_CODE = "productCode";
 
-    public static final String PROJECT_CODE = "projectCode";
+    public static final Integer NUMBER_ONE = 1;
 
+    public static final List<String> SORT_DIRECTIONS = List.of("ASC", "DESC");
 }

@@ -41,7 +41,7 @@ public class AdminProductApi {
 
     @Operation(summary = "Delete Product", security = @SecurityRequirement(name = "bearerAuth"))
     @DeleteMapping
-    private ApiResponse<?> delete(@RequestParam(value = Constants.PROJECT_CODE, required = false) String projectCode) {
+    private ApiResponse<?> delete(@RequestParam(value = Constants.PRODUCT_CODE, required = false) String projectCode) {
         adminProductService.delete(projectCode);
         return new ApiResponse<>();
     }

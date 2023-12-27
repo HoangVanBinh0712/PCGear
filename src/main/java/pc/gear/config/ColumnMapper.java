@@ -25,7 +25,18 @@ public class ColumnMapper<T> extends BeanPropertyRowMapper<T> {
     @Override
     protected void initialize(Class<T> mappedClass) {
         columnMap = new HashMap<>();
-        for (Field field : mappedClass.getDeclaredFields()) {
+        addFields(mappedClass.getDeclaredFields());
+        // Retrieve fields from the superclass
+        Class<?> superClass = mappedClass.getSuperclass();
+        while (superClass != null) {
+            addFields(superClass.getDeclaredFields());
+            superClass = superClass.getSuperclass();
+        }
+        super.initialize(mappedClass);
+    }
+
+    private void addFields(Field[] fields) {
+        for (Field field : fields) {
             if (field.isAnnotationPresent(Column.class)) {
                 Column column = field.getAnnotation(Column.class);
                 if (StringUtils.isNotBlank(column.name())) {
@@ -33,7 +44,6 @@ public class ColumnMapper<T> extends BeanPropertyRowMapper<T> {
                 }
             }
         }
-        super.initialize(mappedClass);
     }
 
     @Override
@@ -56,7 +66,7 @@ public class ColumnMapper<T> extends BeanPropertyRowMapper<T> {
                 return null;
             }
         }
-        return super.getColumnValue(rs,index,pd);
+        return super.getColumnValue(rs, index, pd);
     }
 
     public static <T> ColumnMapper<T> newInstance(Class<T> mappedClass) {

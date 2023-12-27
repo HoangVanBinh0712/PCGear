@@ -14,7 +14,16 @@ public class MessageConstants {
     public static final String PRODUCT = "Constants.product";
     public static final String PRODUCT_CODE = "Constants.productCode";
     public static final String UPDATED_DATETIME = "Constants.updatedDateTime";
-    public static final String MESSAGE_NOT_BLANK = "jakarta.validation.constraints.NotBlank.message";
+    public static final String NOT_BLANK = "jakarta.validation.constraints.NotBlank.message";
+    public static final String MUST_BE_IN = "system.mustBeIn.message";
 
+    public static final String NOT_NULL = "jakarta.validation.constraints.NotNull.message";
+    public static final String NOT_EMPTY = "jakarta.validation.constraints.NotEmpty.message";
+    public static final String AMOUNT_ITEM_NOT_MATCH = "system.amountItemsNotMatch.message";
+
+    public static final String PAGE_SIZE = "Constants.pageSize.message";
+    public static final String PAGE_NUMBER = "Constants.pageNumber.message";
+    public static final String SORT_FIELDS = "Constants.sortFields.message";
+    public static final String SORT_DIRECTIONS = "Constants.sortDirections.message";
 
 }
