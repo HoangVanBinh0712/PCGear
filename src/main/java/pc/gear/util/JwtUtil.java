@@ -8,16 +8,25 @@ import pc.gear.util.type.Role;
 public class JwtUtil {
 
     public static String getCurrentUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetail userDetail = (CustomUserDetail) authentication.getPrincipal();
+        CustomUserDetail userDetail = getCustomUserDetail();
 
         return userDetail.getUsername();
     }
 
+    public static Long getCurrentUserId() {
+        CustomUserDetail userDetail = getCustomUserDetail();
+
+        return userDetail.getUserId();
+    }
+
     public static Role getCurrentUserRole() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetail userDetail = (CustomUserDetail) authentication.getPrincipal();
+        CustomUserDetail userDetail = getCustomUserDetail();
 
         return userDetail.getRole();
+    }
+
+    private static CustomUserDetail getCustomUserDetail() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (CustomUserDetail) authentication.getPrincipal();
     }
 }

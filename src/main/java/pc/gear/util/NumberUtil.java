@@ -71,6 +71,13 @@ public class NumberUtil {
         return patternBuilder.toString();
     }
 
+    public static Integer add2Integer(Integer a, Integer b) {
+        if (a == null || b == null) {
+            return null;
+        }
+        return a + b;
+    }
+
     public static void main(String[] args) {
 
         System.out.println(scaleDouble(divideDoubleInteger(5.377, 3, null), 2, RoundingMode.HALF_UP));

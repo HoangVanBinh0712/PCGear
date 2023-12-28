@@ -12,6 +12,7 @@ public class MessageConstants {
     public static final String MUST_BE_GREATER_THAN = "system.mustBeGreaterThan.message";
     public static final String CATEGORY = "Constants.category";
     public static final String PRODUCT = "Constants.product";
+    public static final String CART = "Constants.cart";
     public static final String PRODUCT_CODE = "Constants.productCode";
     public static final String UPDATED_DATETIME = "Constants.updatedDateTime";
     public static final String NOT_BLANK = "jakarta.validation.constraints.NotBlank.message";

@@ -33,6 +33,6 @@ public class ProductApi {
     @Operation(summary = "Search Product", security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping(value = UriConstants.SEARCH)
     private ApiResponse<?> search(@RequestBody @Valid ProductSearchRequest request) {
-        return new ApiResponse<>(productService.testJdbcTemplate(request));
+        return new ApiResponse<>(productService.search(request));
     }
 }

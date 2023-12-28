@@ -12,4 +12,6 @@ public class UriConstants {
     public static final String PRODUCT = "/product";
     public static final String PRODUCT_BY_CODE = "/product-by-code";
     public static final String SEARCH = "/search";
+    public static final String CART = "/cart";
+    public static final String ORDER = "/order";
 }

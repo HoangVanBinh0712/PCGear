@@ -8,6 +8,4 @@ public interface ProductService {
     GetProductByCodeResponse getByProductCode(String productCode);
 
     ProductSearchResponse search(ProductSearchRequest request);
-
-    Object testJdbcTemplate(ProductSearchRequest request);
 }
