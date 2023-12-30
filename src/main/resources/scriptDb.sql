@@ -32,7 +32,7 @@ create table if not exists pcgear.customer_order
     customer_id int                           null,
     order_date  datetime                      null,
     note        varchar(1000) charset utf8mb4 null,
-    total_price decimal(18, 2)                null,
+    total_amount decimal(18, 2)                null,
     FOREIGN KEY (customer_id) REFERENCES Customer (customer_id)
     );
 

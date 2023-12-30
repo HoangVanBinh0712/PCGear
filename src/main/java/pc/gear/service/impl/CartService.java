@@ -12,5 +12,5 @@ public interface CartService {
 
     void deleteCart(DeleteCartRequest request);
 
-    GetCartResponse getCartItem();
+    GetCartResponse getCartItems();
 }

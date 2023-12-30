@@ -27,7 +27,7 @@ public class CartApi {
     @Operation(summary = "Get Cart", security = @SecurityRequirement(name = "bearerAuth"))
     @GetMapping
     private ApiResponse<?> getCartItem() {
-        return new ApiResponse<>(cartService.getCartItem());
+        return new ApiResponse<>(cartService.getCartItems());
     }
 
     @Operation(summary = "Add to Cart", security = @SecurityRequirement(name = "bearerAuth"))

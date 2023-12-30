@@ -36,10 +36,13 @@ public class OrderItem extends BaseEntity {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @JoinColumn(name = "quantity")
+    @Column(name = "quantity")
     private Integer quantity;
 
-    @JoinColumn(name = "price")
+    @Column(name = "price")
     private BigDecimal price;
+
+    @Column(name = "discount")
+    private BigDecimal discount;
 
 }

@@ -15,6 +15,7 @@ public class DateUtil {
     public static final String BASIC_ISO_DATE = "yyyyMMdd";
 
     public static final String YYYY_MM_DD_HH_MM_SS_ZZZ = "yyyy-MM-dd HH:mm:ss.zzz";
+    public static final String YYYY_MM_DD_HH_MM_SS_ZZZZZZ = "yyyy-MM-dd HH:mm:ss.zzzzzz";
 
     public static LocalDateTime defaultLocalDatetime(LocalDateTime dateTime) {
         if (dateTime == null) {
@@ -60,7 +61,7 @@ public class DateUtil {
         return null;
     }
 
-    public int compareLocalDate(LocalDate date1, LocalDate date2) {
+    public static int compareLocalDate(LocalDate date1, LocalDate date2) {
 
         if (date1 != null) {
             return date1.compareTo(date2);
@@ -68,7 +69,7 @@ public class DateUtil {
         return date2 == null ? 0 : -1;
     }
 
-    public int compareLocalDate(LocalDateTime date1, LocalDateTime date2) {
+    public static int compareLocalDate(LocalDateTime date1, LocalDateTime date2) {
 
         if (date1 != null) {
             return date1.compareTo(date2);

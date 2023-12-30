@@ -20,6 +20,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.server.MethodNotAllowedException;
 import pc.gear.util.Constants;
 import pc.gear.util.MessageConstants;
+import pc.gear.util.StringUtil;
 import pc.gear.util.response.ApiError;
 import pc.gear.util.response.ApiResponse;
 
@@ -95,12 +96,18 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new ApiResponse<>(List.of(new ApiError(messageSource.getMessage(MessageConstants.TYPE_MISS_MATCH, null, LocaleContextHolder.getLocale()), Constants.BAD_REQUEST_CODE))), HttpStatus.BAD_REQUEST);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ViolationListException.class)
+    public ResponseEntity<Object> handleViolationListException(ViolationListException ex) {
+        return new ResponseEntity<>(new ApiResponse<>(ex.getViolations()), HttpStatus.BAD_REQUEST);
+    }
+
 
     private ApiError handleErrorArgument(HandlerMethod handlerMethod, FieldError fieldError) {
         ApiError error = new ApiError();
         String fieldNameError = handlerMethod.getBeanType().getSimpleName()
                 + Constants.DOT + fieldError.getObjectName()
-                + Constants.DOT + fieldError.getField();
+                + Constants.DOT + StringUtil.removeIndexFromString(fieldError.getField());
         String fieldNameMessage = messageSource.getMessage(fieldNameError, null, LocaleContextHolder.getLocale());
         String message = fieldError.getDefaultMessage();
         setMessage(error, message, new Object[] { fieldNameMessage });

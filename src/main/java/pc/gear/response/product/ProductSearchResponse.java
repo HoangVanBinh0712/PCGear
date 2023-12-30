@@ -28,6 +28,7 @@ public class ProductSearchResponse implements ISearchResponse<ProductSearchRespo
 //    @NoArgsConstructor
     @AllArgsConstructor
     @FieldDefaults(level = AccessLevel.PRIVATE)
+    @Builder
     public static class ProductSearchItem extends GetProductByCodeResponse {
 
     }

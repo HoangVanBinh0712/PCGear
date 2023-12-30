@@ -21,6 +21,9 @@ public class MessageConstants {
     public static final String NOT_NULL = "jakarta.validation.constraints.NotNull.message";
     public static final String NOT_EMPTY = "jakarta.validation.constraints.NotEmpty.message";
     public static final String AMOUNT_ITEM_NOT_MATCH = "system.amountItemsNotMatch.message";
+    public static final String NOT_ENOUGH_STOCK = "system.notEnoughStock.message";
+    public static final String DATA_CHANGED = "system.dataChanged.message";
+    public static final String ORDER_PRODUCT_LIST_EMPTY = "system.orderProductListEmpty.message";
 
     public static final String PAGE_SIZE = "Constants.pageSize.message";
     public static final String PAGE_NUMBER = "Constants.pageNumber.message";

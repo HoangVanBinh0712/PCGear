@@ -13,6 +13,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class GetProductByCodeResponse {
 
+    @Column(name = "product_id")
+    private Long productId;
+
     @Column(name = "product_code")
     private String productCode;
 
@@ -50,6 +53,6 @@ public class GetProductByCodeResponse {
     private String categoryName;
 
     @Column(name = "updated_datetime")
-    private LocalDateTime updatedDatetime;
+    private LocalDateTime productUpdatedDatetime;
 
 }

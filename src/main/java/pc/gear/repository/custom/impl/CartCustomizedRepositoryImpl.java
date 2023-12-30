@@ -25,6 +25,7 @@ public class CartCustomizedRepositoryImpl implements CartCustomizedRepository {
         StringBuilder sql = new StringBuilder("""
                 SELECT c.cart_id,
                        c.quantity,
+                       c.updated_datetime as cart_updated_datetime,
                        p.product_code,
                        p.title,
                        p.description,
@@ -45,8 +46,7 @@ public class CartCustomizedRepositoryImpl implements CartCustomizedRepository {
                 """);
         List<Object> params = new ArrayList<>();
         params.add(userId);
-        return jdbcTemplate.query(sql.toString(), ps -> setPreparedStatement(ps, params.toArray()),
-                ColumnMapper.newInstance(GetCartResponse.CartItem.class));
+        return jdbcTemplate.query(sql.toString(), ps -> setPreparedStatement(ps, params.toArray()),                ColumnMapper.newInstance(GetCartResponse.CartItem.class));
     }
 
     private void setPreparedStatement(PreparedStatement ps, Object[] paramsArray) throws SQLException {

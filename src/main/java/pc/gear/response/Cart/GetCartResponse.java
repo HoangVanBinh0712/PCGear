@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import pc.gear.response.product.GetProductByCodeResponse;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -32,5 +33,7 @@ public class GetCartResponse {
         @Column(name = "quantity")
         Integer cartQuantity;
 
+        @Column(name = "cart_updated_datetime")
+        private LocalDateTime cartUpdatedDatetime;
     }
 }

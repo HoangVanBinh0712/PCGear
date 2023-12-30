@@ -58,7 +58,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public GetCartResponse getCartItem() {
+    public GetCartResponse getCartItems() {
         return GetCartResponse.builder()
                 .carts(cartRepository.getCartItems())
                 .build();

@@ -15,6 +15,7 @@ import pc.gear.dto.interfaces.ISearchRequest;
 import pc.gear.util.CollectionUtil;
 import pc.gear.util.Constants;
 import pc.gear.util.MessageConstants;
+import pc.gear.util.response.ApiError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,10 @@ public abstract class BaseService {
 
     protected String getMessage(String messageCode, Object... args) {
         return messageSource.getMessage(messageCode, args, LocaleContextHolder.getLocale());
+    }
+
+    protected ApiError getBadRequestError(String messageCode, Object... args) {
+        return new ApiError(messageSource.getMessage(messageCode, args, LocaleContextHolder.getLocale()), Constants.BAD_REQUEST_CODE);
     }
 
     protected void throwErrorNotFound(String messageCode, Object... args) {
