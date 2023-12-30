@@ -6,15 +6,14 @@ import org.springframework.stereotype.Repository;
 import pc.gear.config.ColumnMapper;
 import pc.gear.repository.custom.CartCustomizedRepository;
 import pc.gear.response.Cart.GetCartResponse;
+import pc.gear.service.BaseService;
 import pc.gear.util.JwtUtil;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CartCustomizedRepositoryImpl implements CartCustomizedRepository {
+public class CartCustomizedRepositoryImpl extends BaseService implements CartCustomizedRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -47,11 +46,5 @@ public class CartCustomizedRepositoryImpl implements CartCustomizedRepository {
         List<Object> params = new ArrayList<>();
         params.add(userId);
         return jdbcTemplate.query(sql.toString(), ps -> setPreparedStatement(ps, params.toArray()),                ColumnMapper.newInstance(GetCartResponse.CartItem.class));
-    }
-
-    private void setPreparedStatement(PreparedStatement ps, Object[] paramsArray) throws SQLException {
-        for (int i = 0; i < paramsArray.length; i++) {
-            ps.setObject(i + 1, paramsArray[i]);
-        }
     }
 }

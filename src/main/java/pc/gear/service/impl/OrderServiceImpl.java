@@ -12,6 +12,7 @@ import pc.gear.repository.CustomerRepository;
 import pc.gear.repository.OrderItemRepository;
 import pc.gear.request.Order.CreateOrderRequest;
 import pc.gear.request.cart.DeleteCartRequest;
+import pc.gear.response.order.GetCustomerOrderResponse;
 import pc.gear.service.BaseService;
 import pc.gear.service.OrderService;
 import pc.gear.util.JwtUtil;
@@ -62,6 +63,11 @@ public class OrderServiceImpl extends BaseService implements OrderService {
         // Delete cart
         List<Long> cartIds = request.getCarts().stream().map(CreateOrderRequest.CreateOrder::getCartId).filter(Objects::nonNull).toList();
         cartService.deleteCart(new DeleteCartRequest(cartIds));
+    }
+
+    @Override
+    public GetCustomerOrderResponse get() {
+        return customerRepository.getCustomerOrders();
     }
 
 

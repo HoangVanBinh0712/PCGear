@@ -17,6 +17,8 @@ import pc.gear.util.Constants;
 import pc.gear.util.MessageConstants;
 import pc.gear.util.response.ApiError;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,7 +123,7 @@ public abstract class BaseService {
     /**
      * Add pagination for native query
      *
-     * @param sql StringBuilder
+     * @param sql           StringBuilder
      * @param searchRequest SearchRequest
      * @author BinhSenpai
      */
@@ -159,8 +161,8 @@ public abstract class BaseService {
      * Will validate page number, page size, sort fields, sort directions that allow
      * After that return a Pageable for Pagination
      *
-     * @param request ISearchRequest
-     * @param sortFields String
+     * @param request               ISearchRequest
+     * @param sortFields            String
      * @param sortFieldsMessageCode String
      * @return Pageable
      * @author BinhSenpai
@@ -178,5 +180,11 @@ public abstract class BaseService {
         Sort sort = Sort.by(orders);
         Pageable pageable = PageRequest.of(request.getPageNumber() - 1, request.getPageSize(), sort);
         return pageable;
+    }
+
+    protected void setPreparedStatement(PreparedStatement ps, Object[] paramsArray) throws SQLException {
+        for (int i = 0; i < paramsArray.length; i++) {
+            ps.setObject(i + 1, paramsArray[i]);
+        }
     }
 }

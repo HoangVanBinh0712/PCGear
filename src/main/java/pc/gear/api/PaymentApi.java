@@ -4,35 +4,26 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pc.gear.request.Order.CreateOrderRequest;
-import pc.gear.response.order.GetCustomerOrderResponse;
-import pc.gear.service.OrderService;
+import pc.gear.request.payment.CreatePaymentRequest;
+import pc.gear.service.PaymentService;
 import pc.gear.util.UriConstants;
 import pc.gear.util.response.ApiResponse;
 
 @RestController
-@RequestMapping(value = UriConstants.ORDER)
-public class OrderApi {
+@RequestMapping(value = UriConstants.PAYMENT)
+public class PaymentApi {
     @Autowired
-    private OrderService orderService;
+    private PaymentService paymentService;
 
     @Operation(summary = "Create order", security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping
-    private ApiResponse<?> create(@RequestBody @Valid CreateOrderRequest request) {
-        orderService.create(request);
+    private ApiResponse<?> create(@RequestBody @Valid CreatePaymentRequest request) {
+        paymentService.create(request);
         return new ApiResponse<>();
-    }
-
-    @Operation(summary = "Create order", security = @SecurityRequirement(name = "bearerAuth"))
-    @GetMapping
-    private ApiResponse<?> get() {
-
-        return new ApiResponse<>( orderService.get());
     }
 
 }

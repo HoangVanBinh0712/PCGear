@@ -45,6 +45,10 @@ public class DateUtil {
         return LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE);
     }
 
+    public static LocalDateTime currentDate() {
+        return LocalDateTime.now();
+    }
+
     public static LocalDateTime toLocalDatetime(String dateTimeStr, String pattern) {
 
         if (StringUtils.isNotBlank(dateTimeStr) && StringUtils.isNotBlank(pattern)) {

@@ -14,6 +14,8 @@ public class MessageConstants {
     public static final String PRODUCT = "Constants.product";
     public static final String CART = "Constants.cart";
     public static final String PRODUCT_CODE = "Constants.productCode";
+    public static final String PAYMENT = "Constants.payment";
+    public static final String ORDER = "Constants.order";
     public static final String UPDATED_DATETIME = "Constants.updatedDateTime";
     public static final String NOT_BLANK = "jakarta.validation.constraints.NotBlank.message";
     public static final String MUST_BE_IN = "system.mustBeIn.message";
@@ -24,6 +26,7 @@ public class MessageConstants {
     public static final String NOT_ENOUGH_STOCK = "system.notEnoughStock.message";
     public static final String DATA_CHANGED = "system.dataChanged.message";
     public static final String ORDER_PRODUCT_LIST_EMPTY = "system.orderProductListEmpty.message";
+    public static final String AMOUNT_NOT_ENOUGH = "system.amountNotEnough.message";
 
     public static final String PAGE_SIZE = "Constants.pageSize.message";
     public static final String PAGE_NUMBER = "Constants.pageNumber.message";
