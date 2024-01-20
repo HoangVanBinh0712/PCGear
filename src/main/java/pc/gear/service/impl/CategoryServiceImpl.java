@@ -14,7 +14,7 @@ import pc.gear.response.category.GetCategoryResponse;
 import pc.gear.response.category.SearchCategoryResponse;
 import pc.gear.service.BaseService;
 import pc.gear.service.CategoryService;
-import pc.gear.util.StringUtil;
+import pc.gear.util.lang.StringUtil;
 import pc.gear.validator.CategoryValidator;
 
 import java.util.List;

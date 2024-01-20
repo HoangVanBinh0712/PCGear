@@ -1,4 +1,7 @@
-package pc.gear.util;
+package pc.gear.util.lang;
+
+import org.apache.commons.lang3.math.NumberUtils;
+import pc.gear.util.Constants;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -76,6 +79,20 @@ public class NumberUtil {
             return null;
         }
         return a + b;
+    }
+
+    public static boolean isValidNumber(Object item, int integerPart, int fractionPart) {
+        if (NumberUtils.isCreatable(item.toString())) {
+            String s = new BigDecimal(item.toString()).toPlainString();
+            String[] parts = s.split("\\.");
+            if (parts.length == 1 && fractionPart == 0) {
+                return parts[0].length() <= integerPart;
+            }
+            if (parts.length == 2) {
+                return parts[0].length() <= integerPart && parts[1].length() <= fractionPart;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) {

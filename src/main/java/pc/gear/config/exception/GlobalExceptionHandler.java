@@ -20,7 +20,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.server.MethodNotAllowedException;
 import pc.gear.util.Constants;
 import pc.gear.util.MessageConstants;
-import pc.gear.util.StringUtil;
+import pc.gear.util.lang.StringUtil;
 import pc.gear.util.response.ApiError;
 import pc.gear.util.response.ApiResponse;
 

@@ -1,5 +1,6 @@
 package pc.gear.service;
 
+import jakarta.validation.ConstraintValidatorContext;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -12,7 +13,7 @@ import pc.gear.config.exception.PcGearException;
 import pc.gear.config.exception.PcGearNotFoundException;
 import pc.gear.dto.SearchRequest;
 import pc.gear.dto.interfaces.ISearchRequest;
-import pc.gear.util.CollectionUtil;
+import pc.gear.util.lang.CollectionUtil;
 import pc.gear.util.Constants;
 import pc.gear.util.MessageConstants;
 import pc.gear.util.response.ApiError;
@@ -23,28 +24,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public abstract class BaseService {
+public class BaseService {
 
     @Autowired
     private MessageSource messageSource;
 
-    protected void throwError(String messageCode, Object... args) {
+    public void throwError(String messageCode, Object... args) {
         throw new PcGearException(messageSource.getMessage(messageCode, args, LocaleContextHolder.getLocale()));
     }
 
-    protected String getMessage(String messageCode, Object... args) {
+    public String getMessage(String messageCode, Object... args) {
         return messageSource.getMessage(messageCode, args, LocaleContextHolder.getLocale());
     }
 
-    protected ApiError getBadRequestError(String messageCode, Object... args) {
+    public ApiError getBadRequestError(String messageCode, Object... args) {
         return new ApiError(messageSource.getMessage(messageCode, args, LocaleContextHolder.getLocale()), Constants.BAD_REQUEST_CODE);
     }
 
-    protected void throwErrorNotFound(String messageCode, Object... args) {
+    public void throwErrorNotFound(String messageCode, Object... args) {
         throw new PcGearNotFoundException(messageSource.getMessage(messageCode, args, LocaleContextHolder.getLocale()));
     }
 
-    protected void validateSearchRequest(ISearchRequest searchRequest, String sortFields, String sortFieldsMessageCode) {
+    public void validateSearchRequest(ISearchRequest searchRequest, String sortFields, String sortFieldsMessageCode) {
         validatePageSizeAndPageNumber(searchRequest);
         validateSortFields(searchRequest, List.of(this.getMessage(sortFields).split(Constants.COMMA)), sortFieldsMessageCode);
     }
@@ -127,7 +128,7 @@ public abstract class BaseService {
      * @param searchRequest SearchRequest
      * @author BinhSenpai
      */
-    protected void addPagination(StringBuilder sql, SearchRequest searchRequest) {
+    public void addPagination(StringBuilder sql, SearchRequest searchRequest) {
         String[] sortFields = searchRequest.getSortFields().split(Constants.COMMA);
         String[] sortDirections = searchRequest.getSortDirections().split(Constants.COMMA);
         int len = sortFields.length;
@@ -167,7 +168,7 @@ public abstract class BaseService {
      * @return Pageable
      * @author BinhSenpai
      */
-    protected Pageable addPaginationAndValidate(ISearchRequest request, String sortFields, String sortFieldsMessageCode) {
+    public Pageable addPaginationAndValidate(ISearchRequest request, String sortFields, String sortFieldsMessageCode) {
         this.validateSearchRequest(request, sortFields, sortFieldsMessageCode);
         // Generate pageable
         List<Sort.Order> orders = new ArrayList<>();
@@ -182,9 +183,15 @@ public abstract class BaseService {
         return pageable;
     }
 
-    protected void setPreparedStatement(PreparedStatement ps, Object[] paramsArray) throws SQLException {
+    public void setPreparedStatement(PreparedStatement ps, Object[] paramsArray) throws SQLException {
         for (int i = 0; i < paramsArray.length; i++) {
             ps.setObject(i + 1, paramsArray[i]);
         }
+    }
+
+    public void setMessage(ConstraintValidatorContext context, String messageCode, Object[] params) {
+        String message = messageSource.getMessage(messageCode, params, LocaleContextHolder.getLocale());
+        context.disableDefaultConstraintViolation();
+        context.buildConstraintViolationWithTemplate(message).addConstraintViolation();
     }
 }

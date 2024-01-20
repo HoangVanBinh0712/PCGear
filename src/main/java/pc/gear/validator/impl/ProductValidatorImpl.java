@@ -8,7 +8,7 @@ import pc.gear.repository.ProductRepository;
 import pc.gear.request.admin.product.CreateProductRequest;
 import pc.gear.request.admin.product.UpdateProductRequest;
 import pc.gear.service.BaseService;
-import pc.gear.util.DateUtil;
+import pc.gear.util.lang.DateUtil;
 import pc.gear.util.MessageConstants;
 import pc.gear.validator.ProductValidator;
 
