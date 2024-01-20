@@ -15,5 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ViolationListException extends RuntimeException {
+
     private List<ApiError> violations;
+
 }

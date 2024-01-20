@@ -4,8 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +21,7 @@ import pc.gear.response.category.GetCategoryResponse;
 import pc.gear.response.category.SearchCategoryResponse;
 import pc.gear.service.CategoryService;
 import pc.gear.util.UriConstants;
+import pc.gear.util.lang.MultipartUtil;
 import pc.gear.util.response.ApiResponse;
 
 @RestController
@@ -100,8 +103,8 @@ public class CategoryApi {
      * @author BinhSenpai
      */
     @Operation(summary = "Delete category", security = @SecurityRequirement(name = "bearerAuth"))
-    @DeleteMapping
-    public ApiResponse<?> delete(@RequestBody DeleteCategoryRequest request) {
+    @PostMapping(value = "delete",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ApiResponse<?> delete(@Valid @ModelAttribute DeleteCategoryRequest request) {
         categoryService.delete(request);
         return new ApiResponse<>();
     }

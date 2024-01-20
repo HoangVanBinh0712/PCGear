@@ -1,141 +1,256 @@
-create table if not exists pcgear.category
+create table category
 (
-    category_id      int auto_increment
-    primary key,
-    name             varchar(255) charset utf8mb4 null,
-    deleteFg         bit default b'0'             null,
-    creataedDateTime datetime                     null,
-    createdBy        varchar(255) charset utf8mb4 null,
-    updatedDateTime  datetime                     null,
-    updatedBy        varchar(255) charset utf8mb4 null
-    );
+    category_id      bigint auto_increment
+        primary key,
+    created_by       varchar(255) null,
+    created_datetime datetime(6)  null,
+    updated_by       varchar(255) null,
+    updated_datetime datetime(6)  null,
+    category_cd      varchar(255) null,
+    delete_fg        bit          null,
+    description      varchar(255) null,
+    name             varchar(255) null
+);
 
-create table if not exists pcgear.customer
+create table department
 (
-    customer_id      int auto_increment
-    primary key,
-    name             varchar(255) charset utf8mb4  null,
-    email            varchar(255) charset utf8mb4  null,
-    password         varchar(255) charset utf8mb4  null,
-    address          varchar(1000) charset utf8mb4 null,
-    phone_number     varchar(20) charset utf8mb4   null,
-    creataedDateTime datetime                      null,
-    createdBy        varchar(255) charset utf8mb4  null,
-    updatedDateTime  datetime                      null,
-    updatedBy        varchar(255) charset utf8mb4  null
-    );
+    department_id    bigint auto_increment
+        primary key,
+    created_by       varchar(255)  null,
+    created_datetime datetime(6)   null,
+    updated_by       varchar(255)  null,
+    updated_datetime datetime(6)   null,
+    department_cd    varchar(16)   null,
+    department_name  varchar(255)  null,
+    description      varchar(2000) null
+);
 
-create table if not exists pcgear.customer_order
+create table admin
 (
-    order_id    int auto_increment
-    primary key,
-    customer_id int                           null,
-    order_date  datetime                      null,
-    note        varchar(1000) charset utf8mb4 null,
-    total_amount decimal(18, 2)                null,
-    FOREIGN KEY (customer_id) REFERENCES Customer (customer_id)
-    );
+    id               bigint auto_increment
+        primary key,
+    created_by       varchar(255) null,
+    created_datetime datetime(6)  null,
+    updated_by       varchar(255) null,
+    updated_datetime datetime(6)  null,
+    email            varchar(255) null,
+    name             varchar(255) null,
+    password         varchar(255) null,
+    phone_number     varchar(255) null,
+    user_name        varchar(255) null,
+    department_id    bigint       null,
+    constraint FKnmmt6f2kg0oaxr11uhy7qqf3w
+        foreign key (department_id) references department (department_id)
+);
 
-create table if not exists pcgear.payment
+create table customer
 (
-    payment_id       int auto_increment
-    primary key,
-    payment_date     datetime                     null,
-    payment_method   varchar(255) charset utf8mb4 null,
-    amount           decimal(18, 2)               null,
-    customer_id      int                          null,
-    order_id         int                          null,
-    creataedDateTime datetime                     null,
-    createdBy        varchar(255) charset utf8mb4 null,
-    updatedDateTime  datetime                     null,
-    updatedBy        varchar(255) charset utf8mb4 null,
-    foreign key (order_id) references pcgear.customer_order (order_id),
-    foreign key (customer_id) references pcgear.customer (customer_id)
-    );
+    customer_id      bigint auto_increment
+        primary key,
+    created_by       varchar(255) null,
+    created_datetime datetime(6)  null,
+    updated_by       varchar(255) null,
+    updated_datetime datetime(6)  null,
+    address          varchar(255) null,
+    email            varchar(255) null,
+    name             varchar(255) null,
+    password         varchar(255) null,
+    phone_number     varchar(255) null,
+    user_name        varchar(255) null,
+    department_id    bigint       null,
+    constraint FK5b3xqcpp6nvpm64shn5yjks1q
+        foreign key (department_id) references department (department_id)
+);
 
-create table if not exists pcgear.product
+create table customer_order
 (
-    product_id       int auto_increment
-    primary key,
-    category_id      int                           null,
-    description      text                          null,
-    price            decimal(14, 2)                null,
-    stock            int default 0                 null,
-    discount         decimal(4, 2)                 null,
-    discountFrom     datetime                      null,
-    discountTo       datetime                      null,
-    image            varchar(1000) charset utf8mb4 null,
-    deleteFg         bit default b'0'              null,
-    creataedDateTime datetime                      null,
-    createdBy        varchar(255) charset utf8mb4  null,
-    updatedDateTime  datetime                      null,
-    updatedBy        varchar(255) charset utf8mb4  null,
-    foreign key (category_id) references pcgear.category (category_id)
-    );
+    order_id         bigint auto_increment
+        primary key,
+    created_by       varchar(255)   null,
+    created_datetime datetime(6)    null,
+    updated_by       varchar(255)   null,
+    updated_datetime datetime(6)    null,
+    note             varchar(255)   null,
+    order_date       datetime(6)    null,
+    total_amount     decimal(38, 2) null,
+    customer_id      bigint         null,
+    constraint FKf9abd30bhiqvugayxlpq8ryq9
+        foreign key (customer_id) references customer (customer_id)
+);
 
-create table if not exists pcgear.cart
+create table payment
 (
-    cart_id          int auto_increment
-    primary key,
-    customer_id      int                          null,
-    product_id       int                          null,
-    quantity         int                          null,
-    creataedDateTime datetime                     null,
-    createdBy        varchar(255) charset utf8mb4 null,
-    updatedDateTime  datetime                     null,
-    updatedBy        varchar(255) charset utf8mb4 null,
-    foreign key (product_id) references pcgear.product (product_id),
-    foreign key (customer_id) references pcgear.customer (customer_id)
-    );
+    payment_id       bigint auto_increment
+        primary key,
+    created_by       varchar(255)   null,
+    created_datetime datetime(6)    null,
+    updated_by       varchar(255)   null,
+    updated_datetime datetime(6)    null,
+    amount           decimal(38, 2) null,
+    payment_date     datetime(6)    null,
+    payment_method   varchar(255)   null,
+    customer_id      bigint         null,
+    order_id         bigint         null,
+    constraint FKby2skjf3ov608yb6nm16b49lg
+        foreign key (customer_id) references customer (customer_id),
+    constraint FKjb82tm1s8qg4mx6eqog4fsctj
+        foreign key (order_id) references customer_order (order_id)
+);
 
-create table if not exists pcgear.order_item
+create table permission
 (
-    order_item_id    int auto_increment
-    primary key,
-    order_id         int                          null,
-    product_id       int                          null,
-    quantity         int                          null,
-    price            decimal(14, 2)               null,
-    creataedDateTime datetime                     null,
-    createdBy        varchar(255) charset utf8mb4 null,
-    updatedDateTime  datetime                     null,
-    updatedBy        varchar(255) charset utf8mb4 null,
-    foreign key (order_id) references pcgear.customer_order (order_id),
-    foreign key (product_id) references pcgear.product (product_id)
-    );
+    permission_id    bigint auto_increment
+        primary key,
+    created_by       varchar(255)  null,
+    created_datetime datetime(6)   null,
+    updated_by       varchar(255)  null,
+    updated_datetime datetime(6)   null,
+    description      varchar(2000) null
+);
 
-
-create table if not exists pcgear.shipment
+create table permission_assign
 (
-    shipment_id      int auto_increment
-    primary key,
-    shipment_date    datetime                     null,
-    address          varchar(255) charset utf8mb4 null,
-    city             varchar(255) charset utf8mb4 null,
-    state            varchar(255) charset utf8mb4 null,
-    country          varchar(255) charset utf8mb4 null,
-    zip_code         varchar(20) charset utf8mb4  null,
-    customer_id      int                          null,
-    order_id         int                          null,
-    creataedDateTime datetime                     null,
-    createdBy        varchar(255) charset utf8mb4 null,
-    updatedDateTime  datetime                     null,
-    updatedBy        varchar(255) charset utf8mb4 null,
-    foreign key (order_id) references pcgear.customer_order (order_id),
-    foreign key (customer_id) references pcgear.customer (customer_id)
-    );
+    id               bigint auto_increment
+        primary key,
+    created_by       varchar(255) null,
+    created_datetime datetime(6)  null,
+    updated_by       varchar(255) null,
+    updated_datetime datetime(6)  null,
+    department_id    bigint       null,
+    end_date         date         not null,
+    permission_id    bigint       null,
+    start_date       date         not null,
+    constraint FK7kaw8tddwvarrecaf1o70hhc4
+        foreign key (department_id) references department (department_id),
+    constraint FK918sy6hpvjnrbft7gqm8yo6cp
+        foreign key (permission_id) references permission (permission_id)
+);
 
-create table if not exists pcgear.wishlist
+create table product
 (
-    wishlist_id      int auto_increment
-    primary key,
-    customer_id      int                          null,
-    product_id       int                          null,
-    creataedDateTime datetime                     null,
-    createdBy        varchar(255) charset utf8mb4 null,
-    updatedDateTime  datetime                     null,
-    updatedBy        varchar(255) charset utf8mb4 null,
-    foreign key (product_id) references pcgear.product (product_id),
-    foreign key (customer_id) references pcgear.customer (customer_id)
-    );
+    product_id       bigint auto_increment
+        primary key,
+    created_by       varchar(255)   null,
+    created_datetime datetime(6)    null,
+    updated_by       varchar(255)   null,
+    updated_datetime datetime(6)    null,
+    delete_fg        bit            null,
+    description      varchar(10000) null,
+    discount         decimal(3)     null,
+    discount_from    datetime(6)    null,
+    discount_to      datetime(6)    null,
+    image            varchar(255)   null,
+    price            decimal(38, 2) null,
+    product_code     varchar(255)   null,
+    stock            int            null,
+    title            varchar(1000)  not null,
+    category_id      bigint         not null,
+    constraint FK1mtsbur82frn64de7balymq9s
+        foreign key (category_id) references category (category_id)
+);
+
+create table cart
+(
+    cart_id          bigint auto_increment
+        primary key,
+    created_by       varchar(255) null,
+    created_datetime datetime(6)  null,
+    updated_by       varchar(255) null,
+    updated_datetime datetime(6)  null,
+    quantity         int          null,
+    customer_id      bigint       null,
+    product_id       bigint       null,
+    constraint FK3d704slv66tw6x5hmbm6p2x3u
+        foreign key (product_id) references product (product_id),
+    constraint FKdebwvad6pp1ekiqy5jtixqbaj
+        foreign key (customer_id) references customer (customer_id)
+);
+
+create table order_item
+(
+    order_item_id    bigint auto_increment
+        primary key,
+    created_by       varchar(255)   null,
+    created_datetime datetime(6)    null,
+    updated_by       varchar(255)   null,
+    updated_datetime datetime(6)    null,
+    discount         decimal(38, 2) null,
+    price            decimal(38, 2) null,
+    quantity         int            null,
+    order_id         bigint         null,
+    product_id       bigint         null,
+    constraint FK551losx9j75ss5d6bfsqvijna
+        foreign key (product_id) references product (product_id),
+    constraint FKgv4bnmo7cbib2nh0b2rw9yvir
+        foreign key (order_id) references customer_order (order_id)
+);
+
+create table resource
+(
+    resource_id      bigint auto_increment
+        primary key,
+    created_by       varchar(255)  null,
+    created_datetime datetime(6)   null,
+    updated_by       varchar(255)  null,
+    updated_datetime datetime(6)   null,
+    description      varchar(2000) null,
+    resource_code    varchar(255)  not null
+);
+
+create table resource_permission_map
+(
+    id               bigint auto_increment
+        primary key,
+    created_by       varchar(255)     null,
+    created_datetime datetime(6)      null,
+    updated_by       varchar(255)     null,
+    updated_datetime datetime(6)      null,
+    can_delete       bit default b'0' null,
+    can_update       bit default b'0' null,
+    can_view         bit default b'0' null,
+    permission_id    bigint           null,
+    resource_id      bigint           null,
+    constraint FK16t5btwuf9hln1vd4gwox0vhx
+        foreign key (resource_id) references resource (resource_id),
+    constraint FKq35r389bg15otlw3fu8ssg4t8
+        foreign key (permission_id) references permission (permission_id)
+);
+
+create table shipment
+(
+    shipment_id      bigint auto_increment
+        primary key,
+    created_by       varchar(255) null,
+    created_datetime datetime(6)  null,
+    updated_by       varchar(255) null,
+    updated_datetime datetime(6)  null,
+    address          varchar(255) null,
+    city             varchar(255) null,
+    country          varchar(255) null,
+    shipment_date    datetime(6)  null,
+    state            varchar(255) null,
+    zip_code         varchar(255) null,
+    customer_id      bigint       null,
+    order_id         bigint       null,
+    constraint FK6v966axnajud3h5y73ag6jr3g
+        foreign key (customer_id) references customer (customer_id),
+    constraint FKcfedtdufyrf8t5p9tnekn7sge
+        foreign key (order_id) references customer_order (order_id)
+);
+
+create table wishlist
+(
+    wishlist_id      bigint auto_increment
+        primary key,
+    created_by       varchar(255) null,
+    created_datetime datetime(6)  null,
+    updated_by       varchar(255) null,
+    updated_datetime datetime(6)  null,
+    customer_id      bigint       null,
+    product_id       bigint       null,
+    constraint FKb6xak0rjui1rsok8ll7ln59cs
+        foreign key (customer_id) references customer (customer_id),
+    constraint FKqchevbfw5wq0f4uqacns02rp7
+        foreign key (product_id) references product (product_id)
+);
 

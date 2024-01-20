@@ -11,6 +11,8 @@ A Backend of website that sells products online. Features: view products, wishli
 <br>
 <br>
 <hr>
+
+<strong>Note that this repo is just an example to show my current knowledge and experience about java spring boot. It contains some common functions that I have used in my real projects.</strong>
 <div>Author: Hoàng Văn Bình</div>
 <div>Mail: thebest11447@gmail.com</div>
 <div>Phone: 0337445596</div>

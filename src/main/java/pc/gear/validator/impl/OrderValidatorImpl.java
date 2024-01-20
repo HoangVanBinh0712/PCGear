@@ -9,7 +9,7 @@ import pc.gear.repository.ProductRepository;
 import pc.gear.request.Order.CreateOrderRequest;
 import pc.gear.service.BaseService;
 import pc.gear.util.Constants;
-import pc.gear.util.DateUtil;
+import pc.gear.util.lang.DateUtil;
 import pc.gear.util.MessageConstants;
 import pc.gear.util.response.ApiError;
 import pc.gear.validator.OrderValidator;
@@ -48,7 +48,7 @@ public class OrderValidatorImpl extends BaseService implements OrderValidator {
                 Product product = productMap.get(cart.getProductId());
                 // If cart's updated datetime is not equal
                 // If product's updated datetime is not equal
-                if (DateUtil.compareLocalDate(product.getUpdatedDateTime(), cart.getProductUpdatedDatetime()) != Constants.NUMBER_ZERO) {
+                if (DateUtil.compareLocalDateTime(product.getUpdatedDateTime(), cart.getProductUpdatedDatetime()) != Constants.NUMBER_ZERO) {
                     errors.add(this.getBadRequestError(MessageConstants.DIRTY_DATA));
                 }
                 // Check the product has enough stock

@@ -12,7 +12,9 @@ import pc.gear.service.BaseService;
 import pc.gear.util.MessageConstants;
 import pc.gear.validator.CategoryValidator;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -45,7 +47,8 @@ public class CategoryValidatorImpl extends BaseService implements CategoryValida
 
     @Override
     public List<Category> validateDelete(DeleteCategoryRequest request) {
-        return categoryRepository.findAllById(request.getCategoryIds());
+        return categoryRepository.findAllById(request.getCategoryIds().stream().filter(Objects::nonNull)
+                .map(BigDecimal::longValue).toList());
     }
 
 }

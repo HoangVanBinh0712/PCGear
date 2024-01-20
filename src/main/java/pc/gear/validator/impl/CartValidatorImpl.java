@@ -9,8 +9,8 @@ import pc.gear.repository.ProductRepository;
 import pc.gear.request.cart.AddToCartRequest;
 import pc.gear.request.cart.UpdateCartRequest;
 import pc.gear.service.BaseService;
-import pc.gear.util.CollectionUtil;
-import pc.gear.util.JwtUtil;
+import pc.gear.util.lang.CollectionUtil;
+import pc.gear.util.lang.JwtUtil;
 import pc.gear.util.MessageConstants;
 import pc.gear.validator.CartValidator;
 

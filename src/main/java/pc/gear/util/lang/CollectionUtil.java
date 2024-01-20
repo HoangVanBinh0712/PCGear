@@ -1,4 +1,4 @@
-package pc.gear.util;
+package pc.gear.util.lang;
 
 import java.util.List;
 import java.util.Objects;

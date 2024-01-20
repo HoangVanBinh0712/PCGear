@@ -15,7 +15,7 @@ import pc.gear.request.cart.DeleteCartRequest;
 import pc.gear.response.order.GetCustomerOrderResponse;
 import pc.gear.service.BaseService;
 import pc.gear.service.OrderService;
-import pc.gear.util.JwtUtil;
+import pc.gear.util.lang.JwtUtil;
 import pc.gear.validator.OrderValidator;
 
 import java.math.BigDecimal;

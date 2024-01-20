@@ -8,7 +8,7 @@ import org.springframework.util.CollectionUtils;
 import pc.gear.config.ColumnMapper;
 import pc.gear.response.order.GetCustomerOrderResponse;
 import pc.gear.service.BaseService;
-import pc.gear.util.JwtUtil;
+import pc.gear.util.lang.JwtUtil;
 
 import java.util.ArrayList;
 import java.util.List;
