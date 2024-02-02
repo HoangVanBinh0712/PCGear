@@ -163,7 +163,10 @@ public class NumberUtil {
         String str = b.abs().toPlainString();
         return !str.contains(".") && str.length() <= max;
     }
-    public static void main(String[] args) {
-    }
 
+    public static void main(String[] args) {
+
+        System.out.println(scaleDouble(divideDoubleInteger(5.377, 3, null), 2, RoundingMode.HALF_UP));
+        System.out.println(divideDoubleInteger(5.377, 3, null));
+    }
 }

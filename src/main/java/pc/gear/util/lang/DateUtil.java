@@ -17,6 +17,7 @@ public class DateUtil {
     public static final String BASIC_ISO_DATE = "yyyyMMdd";
 
     public static final String YYYY_MM_DD_HH_MM_SS_ZZZ = "yyyy-MM-dd HH:mm:ss.zzz";
+
     public static final String YYYY_MM_DD_HH_MM_SS_ZZZZZZ = "yyyy-MM-dd HH:mm:ss.zzzzzz";
 
     public static LocalDateTime defaultLocalDatetime(LocalDateTime dateTime) {
@@ -65,6 +66,14 @@ public class DateUtil {
             return LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(pattern));
         }
         return null;
+    }
+
+    public static int compareLocalDate(LocalDateTime date1, LocalDateTime date2) {
+
+        if (date1 != null) {
+            return date1.compareTo(date2);
+        }
+        return date2 == null ? 0 : -1;
     }
 
     public int compareLocalDateFromString(String dateStr1, String pattern1, String dateStr2, String pattern2) {
@@ -116,12 +125,13 @@ public class DateUtil {
         System.out.println(compareLocalDateTime(null, d2));
         System.out.println("-------------------End-test-compare-localdatetime-------------------");
     }
+
     private static void testCompareTimeStamp() {
         System.out.println("-------------------Start-test-compare-timestamp-------------------");
 
         Timestamp d1 = new Timestamp(System.currentTimeMillis());
-        Timestamp d2 = new Timestamp(0,11,31,23,59,59,0);
-        Timestamp d3 = new Timestamp(2024,11,31,23,59,59,0);
+        Timestamp d2 = new Timestamp(0, 11, 31, 23, 59, 59, 0);
+        Timestamp d3 = new Timestamp(2024, 11, 31, 23, 59, 59, 0);
         System.out.println(compareTimeStamp(d1, d2));
         System.out.println(compareTimeStamp(d1, d3));
         System.out.println(compareTimeStamp(d1, d1));
@@ -132,7 +142,6 @@ public class DateUtil {
     }
 
     /**
-     *
      * If d1 = d2 =>  0
      * If d1 > d2 =>  1
      * If d1 < d2 => -1
@@ -206,5 +215,7 @@ public class DateUtil {
         if (d1.after(d2)) result = 1;
         if (d1.before(d2)) result = -1;
         return result;
+
     }
+
 }
