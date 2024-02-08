@@ -7,9 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import pc.gear.annotaion.interfaces.ExcelColumn;
 import pc.gear.annotaion.interfaces.IntegerNumber;
 import pc.gear.annotaion.interfaces.TextArea;
+import pc.gear.entity.Category;
 import pc.gear.util.Constants;
 
 import java.math.BigDecimal;
@@ -42,7 +44,19 @@ public class ImportProductDto {
     @Digits(integer = 3, fraction = 0)
     private BigDecimal discount;
 
-    @ExcelColumn(sheetName = Constants.PRODUCT_SHEET, columnName = "J", fieldName = "Stock")
+    @ExcelColumn(sheetName = Constants.PRODUCT_SHEET, columnName = "J", fieldName = "Discount from")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @Size(min = 16, max = 16)
+    private String discountFrom;
+
+    @ExcelColumn(sheetName = Constants.PRODUCT_SHEET, columnName = "K", fieldName = "Discount to")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @Size(min = 16, max = 16)
+    private String discountTo;
+
+    @ExcelColumn(sheetName = Constants.PRODUCT_SHEET, columnName = "L", fieldName = "Stock")
     @IntegerNumber(max = 8)
     private BigDecimal stock;
+
+    private Category categoryEntity;
 }

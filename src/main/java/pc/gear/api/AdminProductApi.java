@@ -22,6 +22,7 @@ import pc.gear.util.UriConstants;
 import pc.gear.util.response.ApiResponse;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 @RestController
 @RequestMapping(value = UriConstants.ADMIN + UriConstants.PRODUCT)
@@ -53,7 +54,7 @@ public class AdminProductApi {
 
     @Operation(summary = "Import Product", security = @SecurityRequirement(name = "bearerAuth"))
     @PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    private ApiResponse<?> importProduct(@ModelAttribute @Valid ImportProductRequest request) throws IOException {
+    private ApiResponse<?> importProduct(@ModelAttribute @Valid ImportProductRequest request) throws IOException, IllegalAccessException, SQLException {
         adminProductService.importProduct(request);
         return new ApiResponse<>();
     }

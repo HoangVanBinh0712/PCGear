@@ -54,4 +54,7 @@ public class Constants {
     public static final List<String> SORT_DIRECTIONS = List.of("ASC", "DESC");
 
     public static final String PRODUCT_SHEET = "Product";
+    public static final String END = "End";
+    public static final Integer MAX_ROW_READ = 10000;
+
 }

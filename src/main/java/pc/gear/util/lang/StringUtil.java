@@ -3,6 +3,8 @@ package pc.gear.util.lang;
 import org.apache.commons.lang3.StringUtils;
 import pc.gear.util.Constants;
 
+import java.util.UUID;
+
 public class StringUtil {
 
     public static String addQueryContains(String text) {
@@ -111,4 +113,8 @@ public class StringUtil {
         return len >= min && len <= max;
     }
 
+    public static String generateCode(String title) {
+        return title.replaceAll(Constants.BLANK, Constants.HYPHEN)
+                + Constants.HYPHEN + UUID.randomUUID();
+    }
 }

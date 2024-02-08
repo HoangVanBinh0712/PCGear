@@ -7,12 +7,19 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import pc.gear.annotaion.interfaces.ExcelColumn;
 import pc.gear.annotaion.interfaces.IntegerNumber;
 import pc.gear.annotaion.interfaces.TextArea;
+import pc.gear.dto.excel.ImportProductDto;
+import pc.gear.entity.Category;
+import pc.gear.entity.Product;
 import pc.gear.service.BaseService;
 import pc.gear.service.common.ExcelService;
+import pc.gear.util.Constants;
+import pc.gear.util.MessageConstants;
+import pc.gear.util.lang.DateUtil;
 import pc.gear.util.lang.ExcelUtil;
 import pc.gear.util.lang.NumberUtil;
 import pc.gear.util.lang.StringUtil;
@@ -35,6 +42,23 @@ public class ExcelServiceImpl implements ExcelService {
         for (Field field : bean.getClass().getDeclaredFields()) {
             readField(sheetMap, bean, field, rowIndex, errors);
         }
+    }
+
+    @Override
+    public void readObjectImportProduct(Map<String, Sheet> sheetMap, ImportProductDto bean, int rowIndex, List<ApiError> errors, List<Category> categories) throws IllegalAccessException {
+        for (Field field : bean.getClass().getDeclaredFields()) {
+            readField(sheetMap, bean, field, rowIndex, errors);
+        }
+        // validate a category
+        Category category = categories.stream()
+                .filter(x -> StringUtil.equal(x.getCategoryCd(), bean.getCategory())).findFirst().orElse(null);
+        if (category == null) {
+            errors.add(baseService.getApiErrorForExcel(Constants.PRODUCT_SHEET, rowIndex,
+                    "", MessageConstants.DATA_NOT_FOUND, baseService.getMessage(MessageConstants.CATEGORY)));
+        } else {
+            bean.setCategoryEntity(category);
+        }
+
     }
 
     @Override
@@ -115,6 +139,15 @@ public class ExcelServiceImpl implements ExcelService {
                         "", "system.size.error.message", excelColumn.fieldName(), textArea.min(), textArea.max()));
             }
 
+        }
+        if (field.isAnnotationPresent(DateTimeFormat.class)) {
+            DateTimeFormat dateTimeFormat = field.getAnnotation(DateTimeFormat.class);
+            if (!DateUtil.isValidLocalDatetime(value, dateTimeFormat.pattern())) {
+                // Add error
+                hasError = true;
+                errors.add(baseService.getApiErrorForExcel(excelColumn.sheetName(), rowIndex,
+                        "", "system.date.error.message", excelColumn.fieldName(), dateTimeFormat.pattern()));
+            }
         }
         if (!hasError) {
             // Set value

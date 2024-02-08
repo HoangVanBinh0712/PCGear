@@ -1,12 +1,15 @@
 package pc.gear.util.lang;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.format.annotation.DateTimeFormat;
 import pc.gear.util.Constants;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class DateUtil {
 
@@ -19,6 +22,9 @@ public class DateUtil {
     public static final String YYYY_MM_DD_HH_MM_SS_ZZZ = "yyyy-MM-dd HH:mm:ss.zzz";
 
     public static final String YYYY_MM_DD_HH_MM_SS_ZZZZZZ = "yyyy-MM-dd HH:mm:ss.zzzzzz";
+
+    public static final String DATE_TIME_IMPORT_PATTERN = "yyyy-MM-dd HH:mm";
+
 
     public static LocalDateTime defaultLocalDatetime(LocalDateTime dateTime) {
         if (dateTime == null) {
@@ -66,14 +72,6 @@ public class DateUtil {
             return LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(pattern));
         }
         return null;
-    }
-
-    public static int compareLocalDate(LocalDateTime date1, LocalDateTime date2) {
-
-        if (date1 != null) {
-            return date1.compareTo(date2);
-        }
-        return date2 == null ? 0 : -1;
     }
 
     public int compareLocalDateFromString(String dateStr1, String pattern1, String dateStr2, String pattern2) {
@@ -218,4 +216,44 @@ public class DateUtil {
 
     }
 
+    public static boolean isValidLocalDatetime(String value, String format) {
+        if (StringUtils.isBlank(value)) {
+            return false;
+        }
+        try {
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
+            LocalDateTime.parse(value, dateTimeFormatter);
+            return true;
+        } catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    public static LocalDateTime parseToLocalDatetime(String value, String format) {
+        if (StringUtils.isBlank(value)) {
+            return null;
+        }
+        try {
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
+            return LocalDateTime.parse(value, dateTimeFormatter);
+        } catch (DateTimeParseException e) {
+            return null;
+        }
+    }
+
+    public static Timestamp localDatetimeToTimstamp(LocalDateTime localDateTime) {
+        return localDateTime == null ? null : Timestamp.valueOf(localDateTime);
+    }
+
+    public static Timestamp localDateToTimstamp(LocalDate localDate) {
+        if (localDate == null) {
+            return null;
+        }
+        LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalTime.now());
+        return Timestamp.valueOf(localDateTime);
+    }
+
+    public static LocalDateTime now() {
+        return LocalDateTime.now();
+    }
 }

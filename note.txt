@@ -1,0 +1,8 @@
+#Jpa batch inserts
+- Create a sequence on Mysql.
+- Use @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_generator") Instead of IDENTITY
+- Config:
+   + spring.jpa.properties.hibernate.generate_statistics=true
+   + spring.jpa.properties.hibernate.jdbc.batch_size=50
+   + spring.jpa.properties.hibernate.order_inserts=true
+   + spring.jpa.properties.hibernate.jdbc.batch_versioned_data=true

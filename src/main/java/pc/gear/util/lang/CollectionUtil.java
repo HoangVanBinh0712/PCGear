@@ -1,5 +1,8 @@
 package pc.gear.util.lang;
 
+import org.apache.poi.ss.formula.functions.T;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,4 +20,13 @@ public class CollectionUtil {
         }
         return true;
     }
+
+    public static <T> List<List<T>> splitList(List<T> originalList, int chunkSize) {
+        List<List<T>> result = new ArrayList<>();
+        for (int i = 0; i < originalList.size(); i += chunkSize) {
+            result.add(originalList.subList(i, Math.min(i + chunkSize, originalList.size())));
+        }
+        return result;
+    }
+
 }

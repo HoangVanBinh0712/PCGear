@@ -5,6 +5,7 @@ import pc.gear.request.admin.product.ImportProductRequest;
 import pc.gear.request.admin.product.UpdateProductRequest;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public interface AdminProductService {
 
@@ -14,6 +15,6 @@ public interface AdminProductService {
 
     void delete(String projectCode);
 
-    void importProduct(ImportProductRequest request) throws IOException;
+    void importProduct(ImportProductRequest request) throws IOException, IllegalAccessException, SQLException;
 
 }

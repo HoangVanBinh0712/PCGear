@@ -1,41 +1,28 @@
-package pc.gear.entity;
+package pc.gear.dto.excel;
 
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import pc.gear.util.Constants;
-import pc.gear.util.lang.StringUtil;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "product")
-public class Product extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
-    private Long productId;
+public class ProductCustomized {
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @Column(name = "category_id")
+    private Long category_id;
 
     @Column(name = "title")
     private String title;
@@ -67,10 +54,15 @@ public class Product extends BaseEntity {
     @Column(name = "product_code")
     private String productCode;
 
-    @PrePersist
-    public void prePersist() {
-        // Replace spaces with hyphens
-        this.productCode = StringUtil.generateCode(this.title);
-        this.deleteFlag = this.deleteFlag != null ? this.deleteFlag : Boolean.FALSE;
-    }
+    @Column(name = "created_datetime")
+    protected LocalDateTime createdDateTime;
+
+    @Column(name = "created_by")
+    protected String createdBy;
+
+    @Column(name = "updated_datetime")
+    protected LocalDateTime updatedDateTime;
+
+    @Column(name = "updated_by")
+    protected String updatedBy;
 }
