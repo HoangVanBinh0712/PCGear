@@ -59,4 +59,8 @@ public class ImportProductDto {
     private BigDecimal stock;
 
     private Category categoryEntity;
+
+    // set product No for save product (when import will update)
+    @ExcelColumn(sheetName = Constants.PRODUCT_SHEET, columnName = "N", fieldName = "Product No")
+    private Long productNo;
 }

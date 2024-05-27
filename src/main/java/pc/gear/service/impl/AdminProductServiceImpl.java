@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import pc.gear.entity.Product;
 import pc.gear.repository.CategoryRepository;
 import pc.gear.repository.ProductRepository;
 import pc.gear.request.admin.product.CreateProductRequest;
+import pc.gear.request.admin.product.ExportProductRequest;
 import pc.gear.request.admin.product.ImportProductRequest;
 import pc.gear.request.admin.product.UpdateProductRequest;
 import pc.gear.service.AdminProductService;
@@ -31,6 +33,8 @@ import pc.gear.util.lang.StringUtil;
 import pc.gear.util.response.ApiError;
 import pc.gear.validator.ProductValidator;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -59,6 +63,9 @@ public class AdminProductServiceImpl implements AdminProductService {
 
     @Autowired
     private BaseService baseService;
+
+    @Autowired
+    private JdbcService jdbcService;
 
     @Override
     public void create(CreateProductRequest request) {
@@ -177,6 +184,23 @@ public class AdminProductServiceImpl implements AdminProductService {
         }
     }
 
-    @Autowired
-    private JdbcService jdbcService;
+    @Override
+    public void exportProduct(ExportProductRequest request) {
+        String filePath = "C:\\Users\\ASUS\\OneDrive\\Máy tính\\pcgear\\Product_Export_Template.xlsx";
+        String filePathOutPut = "C:\\Users\\ASUS\\OneDrive\\Máy tính\\pcgear\\Product_Export_Template_1.xlsx";
+        int sourceRowIndex = 8;
+        try (FileInputStream fis = new FileInputStream(filePath);
+             Workbook workbook = WorkbookFactory.create(fis)) {
+            Sheet sheet = workbook.getSheet(Constants.PRODUCT_SHEET);
+            if (sheet != null) {
+                ExcelUtil.writeDataFromListObject(sheet, sourceRowIndex, request.getProducts());
+                // Write the changes back to the workbook
+                try (FileOutputStream fos = new FileOutputStream(filePathOutPut)) {
+                    workbook.write(fos);
+                }
+            }
+        } catch (IOException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

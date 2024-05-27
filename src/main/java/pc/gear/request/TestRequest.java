@@ -16,7 +16,9 @@ import lombok.NoArgsConstructor;
 public class TestRequest {
     @NotBlank
     @Size(max = 20)
-    private String name;
+    private String folderName;
+
+    private String fileName;
 
     @NotNull
     @Digits(integer = 3, fraction = 2)

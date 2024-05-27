@@ -108,7 +108,12 @@ public class GlobalExceptionHandler {
         String fieldNameError = handlerMethod.getBeanType().getSimpleName()
                 + Constants.DOT + fieldError.getObjectName()
                 + Constants.DOT + StringUtil.removeIndexFromString(fieldError.getField());
-        String fieldNameMessage = messageSource.getMessage(fieldNameError, null, LocaleContextHolder.getLocale());
+        String fieldNameMessage = fieldNameError;
+        try {
+            fieldNameMessage = messageSource.getMessage(fieldNameError, null, LocaleContextHolder.getLocale());
+        } catch (Exception e) {
+
+        }
         String message = fieldError.getDefaultMessage();
         setMessage(error, message, new Object[] { fieldNameMessage });
         error.setCode(fieldError.getField());

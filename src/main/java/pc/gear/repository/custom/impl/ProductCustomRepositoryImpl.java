@@ -78,12 +78,12 @@ public class ProductCustomRepositoryImpl extends BaseService implements ProductC
 
     private void addConditionDeletedItem(StringBuilder sql) {
         // If not admin
-        if (!Role.ADMIN.equals(JwtUtil.getCurrentUserRole())) {
-            // Add delete flag
-            sql.append("""
-                    and c.delete_fg != 1 and p.delete_fg != 1
-                    """);
-        }
+//        if (!Role.ADMIN.equals(JwtUtil.getCurrentUserRole())) {
+//            // Add delete flag
+//            sql.append("""
+//                    and c.delete_fg != 1 and p.delete_fg != 1
+//                    """);
+//        }
     }
 
     private void addCondition(ProductSearchRequest request, StringBuilder sql, MapSqlParameterSource param) {
@@ -117,21 +117,8 @@ public class ProductCustomRepositoryImpl extends BaseService implements ProductC
     private StringBuilder getSelectProduct() {
         return new StringBuilder("""
                 select p.product_code,
-                       p.title,
-                       p.description,
-                       p.price,
-                       p.stock,
-                       p.discount,
-                       p.discount_from,
-                       p.discount_to,
-                       p.image,
-                       p.delete_fg,
-                       p.updated_datetime,
-                       c.category_cd,
-                       c.name as category_name
+                       p.title
                 from product p
-                         left join category c
-                                    on p.category_id = c.category_id
                 """);
     }
 
@@ -139,8 +126,6 @@ public class ProductCustomRepositoryImpl extends BaseService implements ProductC
         return new StringBuilder("""
                 select count(1)
                 from product p
-                    left join category c
-                                        on p.category_id = c.category_id
                 """);
     }
 

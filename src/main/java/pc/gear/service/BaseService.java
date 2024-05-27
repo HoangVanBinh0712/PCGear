@@ -132,18 +132,19 @@ public class BaseService {
      * @author BinhSenpai
      */
     public void addPagination(StringBuilder sql, SearchRequest searchRequest) {
-        String[] sortFields = searchRequest.getSortFields().split(Constants.COMMA);
-        String[] sortDirections = searchRequest.getSortDirections().split(Constants.COMMA);
-        int len = sortFields.length;
-        // Sort
-        StringBuilder query = new StringBuilder(" order by ");
-        for (int i = 0; i < len; i++) {
-            query.append(sortFields[i]).append(Constants.BLANK).append(sortDirections[i]);
-            // Not append comma for last item
-            if (i != len - 1) {
-                query.append(Constants.COMMA);
-            }
-        }
+//        String[] sortFields = searchRequest.getSortFields().split(Constants.COMMA);
+//        String[] sortDirections = searchRequest.getSortDirections().split(Constants.COMMA);
+//        int len = sortFields.length;
+//        // Sort
+//        StringBuilder query = new StringBuilder(" order by ");
+        StringBuilder query = new StringBuilder();
+//        for (int i = 0; i < len; i++) {
+//            query.append(sortFields[i]).append(Constants.BLANK).append(sortDirections[i]);
+//            // Not append comma for last item
+//            if (i != len - 1) {
+//                query.append(Constants.COMMA);
+//            }
+//        }
         // Paging
         query.append(" limit ");
         query.append(caculateOffset(searchRequest)).append(Constants.COMMA).append(searchRequest.getPageSize());

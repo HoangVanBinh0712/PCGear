@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pc.gear.request.admin.product.CreateProductRequest;
+import pc.gear.request.admin.product.ExportProductRequest;
 import pc.gear.request.admin.product.ImportProductRequest;
 import pc.gear.request.admin.product.UpdateProductRequest;
 import pc.gear.service.AdminProductService;
@@ -56,6 +57,13 @@ public class AdminProductApi {
     @PostMapping(value = "import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     private ApiResponse<?> importProduct(@ModelAttribute @Valid ImportProductRequest request) throws IOException, IllegalAccessException, SQLException {
         adminProductService.importProduct(request);
+        return new ApiResponse<>();
+    }
+
+    @Operation(summary = "Export Product", security = @SecurityRequirement(name = "bearerAuth"))
+    @PostMapping(value = "export")
+    private ApiResponse<?> exportProduct(@RequestBody @Valid ExportProductRequest request) throws IOException, IllegalAccessException, SQLException {
+        adminProductService.exportProduct(request);
         return new ApiResponse<>();
     }
 }

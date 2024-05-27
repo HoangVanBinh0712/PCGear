@@ -1,6 +1,7 @@
 package pc.gear.service;
 
 import pc.gear.request.admin.product.CreateProductRequest;
+import pc.gear.request.admin.product.ExportProductRequest;
 import pc.gear.request.admin.product.ImportProductRequest;
 import pc.gear.request.admin.product.UpdateProductRequest;
 
@@ -16,5 +17,7 @@ public interface AdminProductService {
     void delete(String projectCode);
 
     void importProduct(ImportProductRequest request) throws IOException, IllegalAccessException, SQLException;
+
+    void exportProduct(ExportProductRequest request);
 
 }
