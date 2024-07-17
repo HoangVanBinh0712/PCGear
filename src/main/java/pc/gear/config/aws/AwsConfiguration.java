@@ -12,17 +12,17 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 @Configuration
 public class AwsConfiguration {
 
-    @Bean
-    public S3Client s3Client() {
-        return S3Client.builder().credentialsProvider(awsCredentialsProvider()).build();
-    }
-    @Bean
-    public S3Presigner s3Presigner() {
-        return S3Presigner.builder().credentialsProvider(awsCredentialsProvider()).build();
-    }
-
-    private AwsCredentialsProvider awsCredentialsProvider() {
-        return DefaultCredentialsProvider.builder().build();
-    }
+//    @Bean
+//    public S3Client s3Client() {
+//        return S3Client.builder().credentialsProvider(awsCredentialsProvider()).build();
+//    }
+//    @Bean
+//    public S3Presigner s3Presigner() {
+//        return S3Presigner.builder().credentialsProvider(awsCredentialsProvider()).build();
+//    }
+//
+//    private AwsCredentialsProvider awsCredentialsProvider() {
+//        return DefaultCredentialsProvider.builder().build();
+//    }
 
 }

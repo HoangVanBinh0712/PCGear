@@ -1,3 +1,27 @@
+EC2 Instance must have:
+    Must add a aws profile for pull ecr, use s3, secret manager
+    Security group open port 22 (SSH), 80 (FE), 8080 (BE)
+    ROLE (May be not need)
+FE Must define the server host url in the env.
+RDS must allow access from port 3306. (Can config to allow only the server).
+linux:
+	pwd: get current path
+Move file:
+	scp -i keypair.pem docker-compose.yaml ec2-user@ec2-100-29-10-87.compute-1.amazonaws.com:/
+Install
+	docker:
+		sudo yum install docker
+		sudo usermod -aG docker ec2-user
+		sudo service docker start
+	docker-compose:
+		sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+		sudo chmod +x /usr/local/bin/docker-compose
+		docker-compose --version
+Pull images:
+	First add AWS configure, AWS configure set aws_session_token
+	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 151465357300.dkr.ecr.us-east-1.amazonaws.com
+
+
 #Jpa batch inserts
 - Create a sequence on Mysql.
 - Use @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_generator") Instead of IDENTITY

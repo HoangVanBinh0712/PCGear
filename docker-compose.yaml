@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend:
+    image: 151465357300.dkr.ecr.us-east-1.amazonaws.com/pcgear-backend
+    environment:
+      DB_HOST_NAME: database-1.ccmf06xwer6u.us-east-1.rds.amazonaws.com
+      DB_USER_NAME: ccmf06xwer6u
+      DB_PASSWORD: ccmf06xwer6u
+    ports:
+      - "8080:8080"
+    networks:
+      - custom
+  frontend:
+    image: 151465357300.dkr.ecr.us-east-1.amazonaws.com/pcgear-angular
+    networks:
+      - custom
+    ports:
+      - "80:80"
+networks:
+  custom:
+    driver: bridge

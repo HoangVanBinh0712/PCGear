@@ -35,7 +35,6 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(request -> request.requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll().anyRequest().permitAll());
-        http.cors(AbstractHttpConfigurer::disable);
         http.csrf(AbstractHttpConfigurer::disable);
         http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(errorCatchFilter, TokenFilter.class);
