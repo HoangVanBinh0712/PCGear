@@ -1,0 +1,10 @@
+[
+  {
+    "ParameterKey": "ProjectName",
+    "ParameterValue": "App4"
+  },
+  {
+    "ParameterKey": "AppName",
+    "ParameterValue": "server"
+  }
+]

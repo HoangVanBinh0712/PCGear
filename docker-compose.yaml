@@ -9,14 +9,7 @@ services:
       DB_PASSWORD: ccmf06xwer6u
     ports:
       - "8080:8080"
-    networks:
-      - custom
   frontend:
     image: 151465357300.dkr.ecr.us-east-1.amazonaws.com/pcgear-angular
     networks:
       - custom
-    ports:
-      - "80:80"
-networks:
-  custom:
-    driver: bridge

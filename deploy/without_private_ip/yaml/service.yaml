@@ -1,0 +1,141 @@
+Description: >
+  Cluster Deploy Java App with ECS.
+
+Parameters:
+  ProjectName:
+    Description: An environment name that will be prefixed to resources.
+    Type: String
+
+  AppName:
+    Description: Application name
+    Type: String
+Resources:
+  ECSCluster:
+    Type: "AWS::ECS::Cluster"
+    Properties:
+      ClusterName: !Sub ${ProjectName}-ECSCluster-3
+
+  ECSTaskDefinition:
+    Type: "AWS::ECS::TaskDefinition"
+    Properties:
+      Family: "MyTaskDefinition"
+      NetworkMode: "awsvpc"
+      RequiresCompatibilities:
+        - "FARGATE"
+      Cpu: "512"
+      Memory: "1024"
+      RuntimePlatform:
+        CpuArchitecture: "X86_64"
+        OperatingSystemFamily: "LINUX"
+      TaskRoleArn:
+        Fn::ImportValue:
+          Fn::Sub: ${ProjectName}-ECSTaskExecutionRoleArn
+      ExecutionRoleArn:
+        Fn::ImportValue:
+          Fn::Sub: ${ProjectName}-ECSTaskExecutionRoleArn
+      ContainerDefinitions:
+        - Name: !Sub ${AppName}-container
+          Image: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${AppName}:latest"
+          Essential: true
+          HealthCheck:
+            Command: [ "CMD-SHELL", "curl -f http://localhost:8080/api/actuator/health || exit 1" ]
+            Interval: 30
+            Timeout: 5
+            Retries: 3
+            StartPeriod: 30
+          PortMappings:
+            - ContainerPort: 8080
+              HostPort: 8080
+          LogConfiguration:
+            LogDriver: "awslogs"
+            Options:
+              awslogs-group: !Ref LogGroup
+              awslogs-region: !Ref "AWS::Region"
+              awslogs-stream-prefix: "ecs"
+  LogGroup:
+    Type: "AWS::Logs::LogGroup"
+    Properties:
+      LogGroupName: !Sub "/ecs/${AppName}"
+      RetentionInDays: 7
+
+  ApplicationLoadBalancer:
+    Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
+    Properties:
+      Name: !Sub "${ProjectName}AppLoadBalancer"
+      Subnets:
+        - Fn::ImportValue:
+            Fn::Sub: ${ProjectName}-PublicSubnet1
+        - Fn::ImportValue:
+            Fn::Sub: ${ProjectName}-PublicSubnet2
+      SecurityGroups:
+        - Fn::ImportValue:
+            Fn::Sub: ${ProjectName}-LBSecurityGroup
+      Scheme: "internet-facing"
+      LoadBalancerAttributes:
+        - Key: "idle_timeout.timeout_seconds"
+          Value: "60"
+
+  ALBTargetGroup:
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
+    Properties:
+      HealthCheckIntervalSeconds: 30
+      HealthCheckPath: "/api/actuator/health"
+      HealthCheckPort: "traffic-port"
+      HealthCheckProtocol: "HTTP"
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 5
+      UnhealthyThresholdCount: 2
+      Matcher:
+        HttpCode: "200"
+      Port: 8080
+      Protocol: "HTTP"
+      TargetType: "ip"
+      VpcId:
+        Fn::ImportValue:
+          Fn::Sub: ${ProjectName}-VPC
+
+  ALBListener:
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
+    Properties:
+      DefaultActions:
+        - Type: "forward"
+          TargetGroupArn: !Ref ALBTargetGroup
+      LoadBalancerArn: !Ref ApplicationLoadBalancer
+      Port: 80
+      Protocol: "HTTP"
+
+  ListenerRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      Actions:
+        - Type: forward
+          TargetGroupArn: !Ref ALBTargetGroup
+      Conditions:
+        - Field: path-pattern
+          Values: [ / ]
+      ListenerArn: !Ref ALBListener
+      Priority: 1
+
+  ECSService:
+    Type: "AWS::ECS::Service"
+    DependsOn: ALBListener
+    Properties:
+      Cluster: !Ref ECSCluster
+      DesiredCount: 1
+      LaunchType: "FARGATE"
+      TaskDefinition: !Ref ECSTaskDefinition
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          Subnets:
+            - Fn::ImportValue:
+                Fn::Sub: "${ProjectName}-PublicSubnet1"
+            - Fn::ImportValue:
+                Fn::Sub: "${ProjectName}-PublicSubnet2"
+          AssignPublicIp: ENABLED
+          SecurityGroups:
+            - Fn::ImportValue:
+                Fn::Sub: ${ProjectName}-ECSSecurityGroup
+      LoadBalancers:
+        - ContainerName: !Sub ${AppName}-container
+          ContainerPort: 8080
+          TargetGroupArn: !Ref ALBTargetGroup

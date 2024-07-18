@@ -1,0 +1,96 @@
+Description: "Create a DB subnet group and MYSQL Database"
+
+Parameters:
+  ProjectName:
+    Description: An environment name that will be prefixed to resources.
+    Type: String
+
+  AppName:
+    Description: The application name.
+    Type: String
+
+  MasterUsername:
+    Type: String
+    Description: The username for our database.
+
+  MasterUserPassword:
+    Type: String
+    Description: The password for the database.
+    "NoEcho": true
+
+#  ParameterGroup:
+#    Type: String
+#    Description: The name of the database parameter group created.
+
+Resources:
+  EC2SecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: "Database instances security group"
+      VpcId:
+        Fn::ImportValue:
+          Fn::Sub: ${ProjectName}-VPC
+      SecurityGroupIngress:
+        - IpProtocol: "tcp"
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: "0.0.0.0/0"
+      SecurityGroupEgress:
+        - CidrIp: "0.0.0.0/0"
+          IpProtocol: "-1"
+
+  RDSDBSubnetGroup:
+    Type: "AWS::RDS::DBSubnetGroup"
+    Properties:
+      DBSubnetGroupDescription: "Subnet Group for mySQL database"
+      DBSubnetGroupName: !Sub "${AWS::Region}-aws-dxl-database-subnet-group"
+      SubnetIds:
+        - Fn::ImportValue:
+            Fn::Sub: ${ProjectName}-PublicSubnet1
+        - Fn::ImportValue:
+            Fn::Sub: ${ProjectName}-PublicSubnet2
+      Tags:
+        - Key: Name
+          Value: !Sub ${AppName} Subnet group
+        - Key: createdBy
+          Value: BinhHoangVan
+        - Key: Project
+          Value: test-ecs
+
+  RDSDBInstance:
+    Type: "AWS::RDS::DBInstance"
+    Properties:
+      DBInstanceIdentifier: aws-dxl-database-1
+      AllocatedStorage: 50
+      DBInstanceClass: db.t3.micro
+      Engine: "MYSQL"
+      MasterUsername: !Ref MasterUsername
+      MasterUserPassword: !Ref MasterUserPassword
+      BackupRetentionPeriod: 7
+      MultiAZ: false
+      EngineVersion: 8.0.35
+      AutoMinorVersionUpgrade: false
+#      Iops: 1000
+      PubliclyAccessible: true
+      StorageType: gp3
+      Port: 3306
+      StorageEncrypted: false
+      CopyTagsToSnapshot: true
+      MonitoringInterval: 60
+      EnableIAMDatabaseAuthentication: false
+#      EnablePerformanceInsights: true
+#      PerformanceInsightsRetentionPeriod: 7
+      DeletionProtection: false
+      DBSubnetGroupName: !Ref RDSDBSubnetGroup
+      VPCSecurityGroups:
+        - !Ref EC2SecurityGroup
+      MaxAllocatedStorage: 1000
+#      DBParameterGroupName: !Ref ParameterGroup
+      MonitoringRoleArn: !Sub "arn:aws:iam::${AWS::AccountId}:role/rds-monitoring-role"
+      Tags:
+        - Key: Name
+          Value: !Sub ${AppName} Rds Mysql Db Instance
+        - Key: createdBy
+          Value: BinhHoangVan
+        - Key: Project
+          Value: test-ecs
