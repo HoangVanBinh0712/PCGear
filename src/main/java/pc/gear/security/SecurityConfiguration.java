@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import pc.gear.security.filters.ErrorCatchFilter;
+import pc.gear.security.filters.ErrorCatchAndLogFilter;
 import pc.gear.security.filters.TokenFilter;
 
 import java.util.Locale;
@@ -25,7 +25,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     private TokenFilter tokenFilter;
 
     @Autowired
-    private ErrorCatchFilter errorCatchFilter;
+    private ErrorCatchAndLogFilter errorCatchAndLogFilter;
 
     @Bean
     protected BCryptPasswordEncoder passwordEncoder() {
@@ -37,7 +37,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         http.authorizeHttpRequests(request -> request.requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll().anyRequest().permitAll());
         http.csrf(AbstractHttpConfigurer::disable);
         http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(errorCatchFilter, TokenFilter.class);
+        http.addFilterBefore(errorCatchAndLogFilter, TokenFilter.class);
         return http.build();
     }
 
