@@ -1,6 +1,7 @@
 package pc.gear.service.impl;
 
 import jakarta.transaction.Transactional;
+import lombok.Builder;
 import lombok.extern.log4j.Log4j2;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -40,6 +41,7 @@ import java.util.Map;
 
 @Service
 @Log4j2
+@Builder
 public class AdminProductServiceImpl implements AdminProductService {
 
     @Autowired
