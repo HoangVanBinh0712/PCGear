@@ -1,5 +1,6 @@
 package pc.gear.validator.impl;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pc.gear.entity.Product;
@@ -15,6 +16,7 @@ import pc.gear.validator.ProductValidator;
 import java.time.LocalDateTime;
 
 @Service
+@AllArgsConstructor
 public class ProductValidatorImpl extends BaseService implements ProductValidator {
 
 
